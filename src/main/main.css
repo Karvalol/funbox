@@ -1,0 +1,60 @@
+.main {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 2px;
+	align-items: flex-start;
+  width: 100%;
+}
+
+.markers {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: stretch;
+  flex: 1 1 auto;
+	margin-right: 2px;
+	max-width: 354px;
+}
+
+.yandex {
+	width: 600px;
+	height: 600px;
+}
+
+.input {
+	margin-top: 2px;
+}
+
+.input-disabled {
+	color: #a9a9a9;
+}
+
+.marker-detail {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.marker-detail-name {
+	margin: auto;
+	text-align: left;
+	word-break: break-all;
+}
+
+.marker-detail-xy {
+	margin: 5px;
+	flex-flow: column nowrap;
+}
+
+.marker-delete-button {
+	margin: 5px;
+	display: flex;
+	border: none;
+	color: white;
+	background-color: #dd2222; 
+}
+
+.placeholder {
+  background: #eeeeee;
+  height: 1.5em;
+}
