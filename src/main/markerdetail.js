@@ -6,11 +6,12 @@ export const MarkerDetail = props =>
     draggable="true"
     onDragEnd={props.dropCallback}
     onDragStart={props.dragCallback}
+    onDragOver={props.overCallback}
     data-index={props.marker.index}>
     <div className='marker-detail-name'>{props.marker.name}</div>
     <div className='marker-detail-xy'>
-      <div>X:{props.marker.lat}</div>
-      <div>Y:{props.marker.lon}</div>
+      <div className='marker-detail-x'>X:{props.marker.lat}</div>
+      <div className='marker-detail-y'>Y:{props.marker.lon}</div>
     </div>
     <input type="button" value="X" 
       className='marker-delete-button' 

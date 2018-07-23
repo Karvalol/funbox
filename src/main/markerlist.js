@@ -103,25 +103,34 @@ class Markers extends Component {
   }
 
   handleDropCallback (event) {
-    //this.dragged.style.display = "flex";
-    this.over.style['border-top'] = ""
-    this.over.style['border-bottom'] = ""
+  	let dragPos;
+  	if (this.over.style['border-top'] !== ""){
+  		dragPos = -1;
+  	}
+  	else {
+  		dragPos = 0;
+  	}
+    this.over.style['border'] = ""
+    this.dragged.style.opacity = "1";
 
     let {markersList} = this.state;
 
     const from = markersList.findIndex(
     	marker => marker.index === Number(this.dragged.dataset.index)
     );
-    let to = markersList.findIndex(
+    const to = markersList.findIndex(
     	marker => marker.index === Number(this.over.dataset.index)
     );
 
-    console.log(event.target.clientHeight / 2)
-    console.log(event.nativeEvent.offsetY)
+    if (from === to) {
+    	return;
+    }
 
-    if (from < to) to--;
+    if (from > to) {
+    	dragPos = dragPos + 1;
+    }
 
-    markersList.splice(to, 0, markersList.splice(from, 1)[0]);
+    markersList.splice(to + dragPos, 0, markersList.splice(from, 1)[0]);
     this.setState({ 
     	markersList: markersList 
     });
@@ -129,23 +138,24 @@ class Markers extends Component {
 
   handleDragOver (event) {
     event.preventDefault();
-    //this.dragged.style.display = "none";
+    this.dragged.style.opacity = "0.5";
 
     if (this.over !== undefined){
-    	this.over.style['border-top'] = ""
-    	this.over.style['border-bottom'] = ""
+    	this.over.style['border'] = ""
     }
 
-    if (event.target.className === "") {
+    if (event.target.className === "marker-detail-x" ||
+        event.target.className === "marker-detail-y") {
     	event.target = event.target.parentNode;
     }
 
     if (event.target.className === "marker-detail-xy" ||
-        event.target.className === "marker-detail-name") {
+        event.target.className === "marker-detail-name" ||
+        event.target.className === "marker-delete-button") {
     	event.target = event.target.parentNode;
     }
 
-    if (event.nativeEvent.offsetY < (event.target.clientHeight / 1)){
+    if (event.clientY - event.target.offsetTop < (event.target.clientHeight / 2)){
     	event.target.style['border-top'] = "3px solid black"
     }
     else{
@@ -173,20 +183,21 @@ class Markers extends Component {
 
     return (
 <div className="main">
-  <div className="markers">
+  <div className="marker-block">
   	<input type="text" 
   		name="markerName" 
   		className="input"
   		placeholder="Укажите наименование метки" 
   		onKeyPress={this.onClickAddMarker}/>
-  	<div onDragOver={this.handleDragOver}>
+  	<div className="marker-list">
 	    {markersList.map((item, index) => {
 	      return <MarkerDetail
 	        marker={item}
 	        key={`marker-list-key ${item.index}`}
 	        deleteCallback={this.handleDeleteCallback}
 	        dragCallback={this.handleDragCallback} 
-	        dropCallback={this.handleDropCallback}  />
+	        dropCallback={this.handleDropCallback} 
+	        overCallback={this.handleDragOver}/>
 	    })}
   	</div>
   </div>

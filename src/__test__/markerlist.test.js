@@ -46,17 +46,7 @@ describe('MarkerList', () => {
     expect(markerlist.state('markersList').length).toBe(0);
   });
 
-  it('should fire dragOver events', () => {
-    const spy = 
-    	jest.spyOn(Markers.prototype, 'handleDragOver').
-    		mockImplementation(() => Promise.resolve())
-    const ml = shallow(<Markers />);
-
-    ml.find('.markers').children().find('div').first().simulate('DragOver');
-		expect(spy).toHaveBeenCalled();
-  });
-
-  it('should delete item', () => {
+  it('should change mapCenter', () => {
     const ml = shallow(<Markers />);
 
     ml.instance().onBoundsChange({originalEvent:{newCenter: [0, 0]}})

@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.markers {
+.marker-block {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: stretch;

@@ -45,19 +45,37 @@ describe('MarkerDetail drag-drop', () => {
     lon: 37.618897,
     index: 1
   }
-  it('should fire dragDrop events', () => {
-    const spydrop = jest.fn();
-    const spydrag = jest.fn();
+  it('should fire drag events', () => {
+    const spy = jest.fn();
     const ml = 
       shallow(
         <MarkerDetail 
           marker={item} 
-          dragCallback={spydrag} 
-          dropCallback={spydrop} />
+          dragCallback={spy} />
       );
     ml.simulate('DragStart');
+    expect(spy).toHaveBeenCalled();
+  });
+  it('should fire drop events', () => {
+    const spy = jest.fn();
+    const ml = 
+      shallow(
+        <MarkerDetail 
+          marker={item} 
+          dropCallback={spy} />
+      );
     ml.simulate('DragEnd');
-    expect(spydrag).toHaveBeenCalled();
-    expect(spydrop).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
+  });
+  it('should fire over events', () => {
+    const spy = jest.fn();
+    const ml = 
+      shallow(
+        <MarkerDetail 
+          marker={item} 
+          overCallback={spy} />
+      );
+    ml.simulate('DragOver');
+    expect(spy).toHaveBeenCalled();
   });
 });
